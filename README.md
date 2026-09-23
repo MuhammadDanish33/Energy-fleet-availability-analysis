@@ -74,7 +74,7 @@ The project comprises four SQL queries, each directly answering one business que
 
 ## Key Results & Insights
 
-### Finding 1 — The Entire Fleet Is Stuck in the Marginal Band
+### Finding 1: The Entire Fleet Is Stuck in the Marginal Band
 
 > **All 46 asset-type × region combinations returned an average availability of 86.29% to 89.71% and every single one classified as "Marginal — Monitor Closely."**
 
@@ -93,7 +93,7 @@ Highest lost-hour groups:
 
 ---
 
-### Finding 2 — Weekend Availability Gaps Signal Operational Coverage Issues
+### Finding 2: Weekend Availability Gaps Signal Operational Coverage Issues
 
 Query B revealed that the weekday vs. weekend availability gap is not uniform and it is concentrated in specific asset type and region combinations, pointing to operational rather than purely technical causes.
 
@@ -111,7 +111,7 @@ Some combinations show the reverse Solar Channel Islands (weekday 87.47% vs. wee
 
 ---
 
-### Finding 3 — Repeat Offender Assets Identified Across Multiple Years
+### Finding 3: Repeat Offender Assets Identified Across Multiple Years
 
 Query C ranked every asset by availability within its type and year. Several assets appeared in the bottom rankings repeatedly:
 
@@ -127,7 +127,7 @@ The `DiffFromRegionalTypeAvg` column confirms these assets are structurally unde
 
 ---
 
-### Finding 4 — No Sustained Improvement Across Four Years
+### Finding 4: No Sustained Improvement Across Four Years
 
 Query D computed quarter-over-quarter availability change for each asset type across all 16 quarters (2022 Q1 – 2025 Q4).
 
@@ -228,4 +228,4 @@ This project demonstrates the complete analytical workflow of an Energy Data Ana
 
 ---
 
-*Prepared by Muhammad Danish *
+**Prepared by Muhammad Danish **
