@@ -5,7 +5,7 @@
 
 ## Project Overview
 
-This project analyses the operational availability of a 120-asset UK and Ireland renewable energy fleet — spanning Wind, Solar, and Battery assets across 18 regions — using structured SQL queries executed against a verified relational dataset.
+This project analyses the operational availability of a 120-asset UK and Ireland renewable energy fleet spanning Wind, Solar, and Battery assets across 18 regions using structured SQL queries executed against a verified Synthetic relational dataset.
 
 The analysis answers four operational business questions through a progressive, data-driven framework: from fleet-level benchmarking down to individual asset prioritisation and multi-year trend tracking. Results were validated against 5,000 daily availability records covering January 2022 to December 2025.
 
@@ -33,17 +33,17 @@ This analysis builds a systematic fleet performance classification system to ans
 ## Data & Approach
 
 ### Dataset
-- **Source:** Structured relational energy dataset — verified through full dataset audit before analysis
-- **Primary table:** `Energy.FactAssetAvailability` — 5,000 daily availability records (cleanest and most complete table in the dataset)
+- **Source:** Structured relational energy dataset verified through full dataset audit before analysis
+- **Primary table:** `Energy.FactAssetAvailability 5,000 daily availability records (cleanest and most complete table in the dataset)
 - **Supporting tables:** `Energy.DimAsset`, `Energy.DimRegion`, `Common.DateDim`
 - **Coverage:** 120 assets · 18 UK & Ireland regions · 4 full years (2022–2025)
 - **Asset types:** Wind, Solar, Battery
 
 ### Data Governance Applied
 Before writing a single query, a full dataset audit was completed. The following decisions were applied:
-- `IsActive = 1` filter applied in all queries — excludes 11 decommissioned or inactive assets
-- `Technology` column excluded — confirmed unreliable due to systematic AssetType/Technology mismatch
-- `DateKey` (INTEGER YYYYMMDD) joins directly to `Common_DateDim` — no conversion required
+- `IsActive = 1` filter applied in all queries excludes 11 decommissioned or inactive assets
+- `Technology` column excluded confirmed unreliable due to systematic AssetType/Technology mismatch
+- `DateKey` (INTEGER YYYYMMDD) joins directly to `Common_DateDim` no conversion required
 - All queries are NULL-safe: `TotalLostHours` uses `CASE WHEN AvailableHours IS NOT NULL THEN 24 - AvailableHours ELSE 0 END`
 
 ### Performance Thresholds
@@ -76,7 +76,7 @@ The project comprises four SQL queries, each directly answering one business que
 
 ### Finding 1 — The Entire Fleet Is Stuck in the Marginal Band
 
-> **All 46 asset-type × region combinations returned an average availability of 86.29% to 89.71% — every single one classified as "Marginal — Monitor Closely."**
+> **All 46 asset-type × region combinations returned an average availability of 86.29% to 89.71% and every single one classified as "Marginal — Monitor Closely."**
 
 Not one region or asset type reached the 90% PPA benchmark at the fleet aggregate level. The fleet has operated below the contractual threshold across the entire 4-year period.
 
@@ -95,7 +95,7 @@ Highest lost-hour groups:
 
 ### Finding 2 — Weekend Availability Gaps Signal Operational Coverage Issues
 
-Query B revealed that the weekday vs. weekend availability gap is not uniform — it is concentrated in specific asset type and region combinations, pointing to operational rather than purely technical causes.
+Query B revealed that the weekday vs. weekend availability gap is not uniform and it is concentrated in specific asset type and region combinations, pointing to operational rather than purely technical causes.
 
 | Asset Type | Region | Weekday Avg | Weekend Avg | Gap |
 |---|---|---|---|---|
@@ -105,9 +105,9 @@ Query B revealed that the weekday vs. weekend availability gap is not uniform �
 | Wind | North Sea | 87.69% | 84.92% | **−2.77%** |
 | Battery | Scotland South | 88.68% | 86.97% | **−1.71%** |
 
-> A 5% weekend availability drop in Battery (Ireland) and 4.56% in Battery (North England) is not consistent with equipment failure patterns — it points to reduced monitoring coverage or delayed incident response at weekends.
+> A 5% weekend availability drop in Battery (Ireland) and 4.56% in Battery (North England) is not consistent with equipment failure patterns it points to reduced monitoring coverage or delayed incident response at weekends.
 
-Some combinations show the reverse — Solar Channel Islands (weekday 87.47% vs. weekend 90.00%) and Wind South East (weekday 85.12% vs. weekend 88.51%) — confirming that this is not a fleet-wide pattern but a location-specific operational issue.
+Some combinations show the reverse Solar Channel Islands (weekday 87.47% vs. weekend 90.00%) and Wind South East (weekday 85.12% vs. weekend 88.51%) confirming that this is not a fleet-wide pattern but a location-specific operational issue.
 
 ---
 
@@ -123,7 +123,7 @@ Query C ranked every asset by availability within its type and year. Several ass
 | Wind Farm Deanborough 55 | Wind | Yorkshire | 75.79% (2023 Q3) | 2023, 2024, 2025 |
 | Solar Farm Turnertown 109 | Solar | Ireland | 76.46% (2023 Q1) | 2022, 2023, 2024 |
 
-The `DiffFromRegionalTypeAvg` column confirms these assets are structurally underperforming — not experiencing isolated incidents. Battery Farm Raymondchester 58 recorded `DiffFromRegionalTypeAvg = −12.1` in 2022 Q1, meaning its availability was **12.1 percentage points below Scotland North Battery peers** in that period.
+The `DiffFromRegionalTypeAvg` column confirms these assets are structurally underperforming not experiencing isolated incidents. Battery Farm Raymondchester 58 recorded `DiffFromRegionalTypeAvg = −12.1` in 2022 Q1, meaning its availability was **12.1 percentage points below Scotland North Battery peers** in that period.
 
 ---
 
@@ -159,13 +159,13 @@ Query D computed quarter-over-quarter availability change for each asset type ac
 
 | Stakeholder | What This Analysis Provides |
 |---|---|
-| **O&M Director** | A named, ranked list of assets requiring immediate investigation — replacing ad-hoc reporting with a data-driven maintenance priority queue |
+| **O&M Director** | A named, ranked list of assets requiring immediate investigation replacing ad-hoc reporting with a data-driven maintenance priority queue |
 | **Asset Manager** | Portfolio-wide benchmarking of 120 assets across 18 regions; identification of repeat underperformers before contract renewal or refinancing events |
 | **Finance / CFO** | Quantified lost hours by region and asset type — provides the input needed to calculate PPA penalty exposure when contract thresholds are applied |
 | **Grid Operators** | Fleet uptime data by GridOperator (National Grid ESO, EirGrid, SONI, Manx Utilities, Jersey Electricity) supports grid balancing and regulatory reporting |
 | **Lenders / Investors** | Demonstrates systematic, documented performance monitoring — satisfies project finance covenant and ESG disclosure requirements |
 
-> **Important boundary:** This analysis quantifies availability loss and identifies underperforming assets. Specific PPA penalty amounts require contract-level threshold data not present in this dataset. The weekend gap flags a potential staffing issue — HR and scheduling data would be required to confirm root cause.
+> **Important boundary:** This analysis quantifies availability loss and identifies underperforming assets. Specific PPA penalty amounts require contract-level threshold data not present in this dataset. The weekend gap flags a potential staffing issue HR and scheduling data would be required to confirm root cause.
 
 ---
 
@@ -210,7 +210,7 @@ CASE WHEN classification     Analytical storytelling     Energy sector KPI fluen
 |---|---|
 | **SQL Server** | Query development and execution (schema: `Energy.*`, `Common.*`) |
 | **Microsoft Excel** | Result storage, validation, and structured output across 4 sheets |
-| **Relational Dataset** | 17-table star schema — 5 Fact tables, 12 Dimension tables |
+| **Relational Dataset** | 21-table star schema 7 Fact tables, 12 Dimension tables, 2 common |
 
 ---
 
@@ -224,8 +224,8 @@ This project demonstrates the complete analytical workflow of an Energy Data Ana
 - A named, ranked O&M priority list of chronically underperforming assets with quantified peer deviation
 - A 4-year quarterly trend analysis confirming the fleet has not sustainably improved beyond the Marginal band
 
-**The core finding:** The entire UK and Ireland renewable energy fleet analysed has operated below the standard 90% PPA availability benchmark for four consecutive years, with no asset type or region achieving sustained improvement — making this analysis directly actionable for O&M, Finance, and Asset Management teams.
+**The core finding:** The entire UK and Ireland renewable energy fleet analysed has operated below the standard 90% PPA availability benchmark for four consecutive years, with no asset type or region achieving sustained improvement making this analysis directly actionable for O&M, Finance, and Asset Management teams.
 
 ---
 
-*Prepared by Muhammad Danish · Research and Innovation Manager · September 2026*
+*Prepared by Muhammad Danish *
